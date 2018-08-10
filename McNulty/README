@@ -1,0 +1,62 @@
+Summary - Project McNulty
+Loan default prediction - Lending Club
+Jiamin Han
+
+Project Design
+
+In this project, I aim to train a classification model to predict bad loans on a major peer-to-peer lending platform, Lending Club. how does P2P lending work? Briefly, borrowers submit their loan application to lending club, investors can directly browse and select loan applications they want to fund, borrowers pay interests and principals back to investors .Peer to peer lending is supposed to simplify the personal loan process by connecting investors and borrowers directly. However, investors always run the risk of investing a bad loan.Therefore, I will develop a model to identify bad loans by using information available on loan applications. In that way, investors can make more objective and data-driven assessment of loan application on the market.
+
+I started with EDA and filtered out features that do not have a strong impact on the outcome and the ones that available only after the loan is issued. Then I cleaned and transformed my data. 
+Then I created several features in feature engineering. For model training, I fitted 7 classification models on my training data, followed by cross validation and gridsearch to tune my models. Then I validated my models on test data and selected model by comparing AUC and F1 scores.
+
+Result
+
+I plotted ROC curve for each of the 7 models. Gradient boosting, Support vector machine and Random Forest yield the highest AUC, which is around 0.72 to 0.73. By zooming in the ROC curves, I found these three models performed similarly to each other, although GBT generated a higher F1 score. However, the F1 scores are low because of the imbalanced data. In the secondary analysis, I created a subset dataset with balanced distribution of good and bad loans, which includes about 500k loans. These generated similar AUC values in the balanced dataset, but much higher F1 scores. Compared to the analysis on the full dataset, the imbalance in outcome distribution could have a big impact on F1 score. 
+
+Looking back at my features in the gradient boosting model, the following are the top 10 features with highest impact on loan outcomes. Applying this model, lending club can flag loans with high risk of default and can set higher interests rate to offset the risk of default.
+
+Average FICO score
+0.092
+Charge off times within 12 mths
+0.074
+Total credit revolving balance
+0.064
+Debt to income ratio
+0.061
+total number of credit lines
+0.058
+Interest rate
+0.057
+Loan description length
+0.056
+Times of delinquency in 2yrs
+0.056
+Number of derogatory records
+0.055
+Loan application year
+0.044
+
+ 
+Tools
+ 
+Tableau, Jupyter notebook, Pandas, Numpy: Ingesting, organizing, processing data.
+Matplotlib, Seaborn: Data visualization
+Scikit-learn, statsmodels: Fit regression model
+ 
+Data
+I downloaded data from Lending Club website which contains 1,059,979 complete loans issued through 2007-2018. The dataset comes with 140 features. For each loan, I selected 28 features which are available at the time of loan application, including loan information, application type and borrower’s financial and demographic information. My analytical goal is to select features and models that best predict the loan status. My dependent variable is the final status of the loan, which is defined as good if the loan is paid off on time or bad if the loan is charged off, paid off late, or default. 
+ 
+Algorithm(s)
+
+KNN
+Logistic Regression
+Naive Bayes
+SVM
+Decision tree
+Random forest
+Gradient boosting
+
+What would I do next time?
+
+There is some information provided by the dataset is not fully used by my model, for example, loan description, loan purpose and job title are all written as free text, which are potentially useful for risk prediction. In my future work, I can extract features from these texts using NLP. 
+Second, many features are correlated, therefore, it would make sense to perform dimension reduction to simplify the feature matrix and to reduce computational complexity. 
